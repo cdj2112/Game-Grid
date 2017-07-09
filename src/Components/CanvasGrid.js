@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 
+import findPieceInPosition from '../utils/findPieceInPosition';
+
 class CanvasGrid extends Component {
 	componentDidMount(){
 		this.redraw();
 	}
 
-  componentWillReceiveProps(){
+  componentDidUpdate(){
     this.redraw();
   }
 
   redraw(){
-    const { gridSideLength, pieces } = this.props;
+    const { gridSideLength, pieces, selected } = this.props;
     const canvas = this.refs.canvasBase;
     const ctx = canvas.getContext('2d');
     const { width, height } = canvas;
@@ -32,6 +34,15 @@ class CanvasGrid extends Component {
     ctx.strokeRect(0,0,500,500);
     ctx.stroke();
 
+    if(selected >= 0){
+      ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+      const selPos = pieces[selected].pos;
+      ctx.fillRect(
+        gridSizeW*selPos.x, gridSizeH*selPos.y, 
+        gridSizeW, gridSizeH
+      );
+    }
+
     pieces.forEach((p)=>{
       const { pos, color } = p;
       const { x, y } = pos;
@@ -48,16 +59,18 @@ class CanvasGrid extends Component {
   }
 
   handleClick(ev){
-  	const { gridSideLength } = this.props;
+  	const { gridSideLength, pieces, selectPiece } = this.props;
 		const canvas = this.refs.canvasBase;
 		const { width, height } = canvas;
 
   	const x = ev.nativeEvent.offsetX;
   	const y = ev.nativeEvent.offsetY;
-    console.log(
-    	Math.floor(x/width*gridSideLength), 
-    	Math.floor(y/height*gridSideLength)
-    );
+    
+    const gridX = Math.floor(x/width*gridSideLength);
+    const gridY = Math.floor(y/height*gridSideLength);
+
+    const hitPiece = findPieceInPosition(pieces, gridX, gridY);
+    selectPiece(pieces.indexOf(hitPiece));
   }
 
   render(){

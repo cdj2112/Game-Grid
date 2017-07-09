@@ -13,6 +13,7 @@ class App extends Component {
     super()
     this.state={
       pieces: [],
+      selected: -1,
     }
   }
 
@@ -29,11 +30,18 @@ class App extends Component {
     this.setState({pieces});
   }
 
+  selectPiece(index){
+    this.setState({selected: index})
+  }
+
   render() {
-    const { pieces } = this.state;
+    const { pieces, selected } = this.state;
     return (
       <div className="App">
-        <CanvasGrid gridSideLength={10} pieces={pieces}/>
+        <CanvasGrid 
+          gridSideLength={10} pieces={pieces} selected={selected}
+          selectPiece={this.selectPiece.bind(this)}
+        />
         <PieceAdder addPiece={this.addPiece.bind(this)}/>
       </div>
     );
