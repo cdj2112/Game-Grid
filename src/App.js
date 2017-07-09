@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import CanvasGrid from './Components/CanvasGrid';
 import PieceAdder from './Components/PieceAdder';
 
+import findPieceInPosition from './utils/findPieceInPosition';
+
 //import logo from './logo.svg';
 import './App.css';
 
@@ -10,17 +12,21 @@ class App extends Component {
   constructor(props){
     super()
     this.state={
-      pieces: []
+      pieces: [],
     }
   }
 
   addPiece({ x, y, color }){
     const { pieces } = this.state;
-    pieces.push({
-      pos: {x:parseInt(x), y:parseInt(y)},
-      color,
-    })
-    this.setState({pieces})
+    const taken = findPieceInPosition(pieces, parseInt(x), parseInt(y));
+
+    if(!taken) {
+      pieces.push({
+        pos: {x:parseInt(x), y:parseInt(y)},
+        color
+      });
+    }
+    this.setState({pieces});
   }
 
   render() {
