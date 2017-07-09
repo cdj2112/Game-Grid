@@ -89,6 +89,17 @@ class App extends Component {
     }
   }
 
+  executePaths(){
+    const { pieces } = this.state;
+    const newPieces = pieces.map((p)=>{
+      const newPos = p.path.reduce((pos, d)=>{
+        return { x: pos.x + DIRECTIONS[d][0], y: pos.y + DIRECTIONS[d][1]}
+      }, p.pos);
+      return {...p, pos: newPos, path:[]};
+    });
+    this.setState({pieces: newPieces});
+  }
+
   render() {
     const { pieces, selected } = this.state;
     return (
@@ -105,6 +116,7 @@ class App extends Component {
           validDirections = {this.deriveCollision()}
           addPath={this.addPathToSelected.bind(this)}
           clearPath={this.clearPathOfSelected.bind(this)}
+          execute={this.executePaths.bind(this)}
         />
       </div>
     );

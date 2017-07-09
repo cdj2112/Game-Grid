@@ -9,8 +9,8 @@
 .rosePoint {
 	position: absolute;
 	width:33%;
-	height: 33%;
-	top: 33%;
+	height: 25%;
+	top: 25%;
 	left: 33%;
 }
 
@@ -23,7 +23,7 @@
 }
 
 .south {
-	top: 66%;
+	top: 50%;
 }
 
 .west {
@@ -32,4 +32,10 @@
 
 .hide {
 	visibility: hidden;
+}
+
+.bottom {
+	width: auto;
+	height: auto;
+	top: 75%;
 }

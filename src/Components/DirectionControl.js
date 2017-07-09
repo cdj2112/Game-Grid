@@ -23,7 +23,7 @@ export default class DirectionControl extends Component {
   }
 
   render(){
-  	const { validDirections } = this.props;
+  	const { validDirections, execute } = this.props;
   	const directionlabels = Object.keys(DIRECTIONS).map((d, idx)=>{
   		return <label 
   		  key={idx} 
@@ -35,6 +35,7 @@ export default class DirectionControl extends Component {
   	})
   	return <div className={'arrowBase'}>
       {directionlabels}
+      <button className={'rosePoint bottom'} onClick={execute}>Execute Paths</button>
   	</div>
   }
 }
