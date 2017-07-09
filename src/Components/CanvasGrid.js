@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
 
 import findPieceInPosition from '../utils/findPieceInPosition';
-
-const DIRCTIONS = [
-  [0, -1],
-  [1, -1],
-  [1, 0],
-  [1, 1],
-  [0, 1],
-  [-1, 1],
-  [-1, 0],
-  [-1, -1]
-]
+import DIRCTIONS from '../utils/Directions';
 
 class CanvasGrid extends Component {
 	componentDidMount(){

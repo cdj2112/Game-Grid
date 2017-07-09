@@ -5,6 +5,7 @@ import PieceAdder from './Components/PieceAdder';
 import DirectionControl from './Components/DirectionControl';
 
 import findPieceInPosition from './utils/findPieceInPosition';
+import DIRECTIONS from './utils/Directions';
 
 //import logo from './logo.svg';
 import './App.css';
@@ -66,6 +67,28 @@ class App extends Component {
     }
   }
 
+  deriveCollision(){
+    const { pieces, selected } = this.state;
+    if(selected >= 0){
+      const { x, y } = pieces[selected].pos;
+      let newPosition = pieces[selected].path.reduce((curPos, d)=>{
+        curPos.x += DIRECTIONS[d][0];
+        curPos.y += DIRECTIONS[d][1];
+        return curPos;
+      }, {x, y});
+
+      return DIRECTIONS.map((d)=>{
+        return !(newPosition.x + d[0] >= 10 ||
+        newPosition.x + d[0] < 0 ||
+        newPosition.y + d[1] >= 10 ||
+        newPosition.y + d[1] < 0 ||
+        findPieceInPosition(pieces, newPosition.x+d[0], newPosition.y+d[1]))
+      })
+    } else {
+      return [];
+    }
+  }
+
   render() {
     const { pieces, selected } = this.state;
     return (
@@ -79,6 +102,7 @@ class App extends Component {
           removeSelected={this.removeSelected.bind(this)}
         />
         <DirectionControl 
+          validDirections = {this.deriveCollision()}
           addPath={this.addPathToSelected.bind(this)}
           clearPath={this.clearPathOfSelected.bind(this)}
         />

@@ -23,10 +23,11 @@ export default class DirectionControl extends Component {
   }
 
   render(){
+  	const { validDirections } = this.props;
   	const directionlabels = Object.keys(DIRECTIONS).map((d, idx)=>{
   		return <label 
   		  key={idx} 
-  		  className={`rosePoint ${DIRECTIONS[d].className}`}
+  		  className={`rosePoint ${DIRECTIONS[d].className} ${validDirections[idx]===false ? 'hide' : ''}`}
   		  onClick={this.addPath(idx)}
   		>
   		 {d}
