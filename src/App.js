@@ -34,6 +34,14 @@ class App extends Component {
     this.setState({selected: index})
   }
 
+  removeSelected(){
+    const { pieces, selected } = this.state;
+    if(selected >= 0){
+      pieces.splice(selected, 1);
+      this.setState({pieces, selected: -1});
+    }
+  }
+
   render() {
     const { pieces, selected } = this.state;
     return (
@@ -42,7 +50,10 @@ class App extends Component {
           gridSideLength={10} pieces={pieces} selected={selected}
           selectPiece={this.selectPiece.bind(this)}
         />
-        <PieceAdder addPiece={this.addPiece.bind(this)}/>
+        <PieceAdder selected={selected} 
+          addPiece={this.addPiece.bind(this)}
+          removeSelected={this.removeSelected.bind(this)}
+        />
       </div>
     );
   }
