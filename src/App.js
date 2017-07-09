@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import CanvasGrid from './Components/CanvasGrid' 
+import CanvasGrid from './Components/CanvasGrid';
+import PieceAdder from './Components/PieceAdder';
 
 //import logo from './logo.svg';
 import './App.css';
@@ -13,10 +14,11 @@ class App extends Component {
     }
   }
 
-  addPiece(){
+  addPiece({ x, y, color }){
     const { pieces } = this.state;
     pieces.push({
-      pos: {x:0, y:0}
+      pos: {x:parseInt(x), y:parseInt(y)},
+      color,
     })
     this.setState({pieces})
   }
@@ -26,7 +28,7 @@ class App extends Component {
     return (
       <div className="App">
         <CanvasGrid gridSideLength={10} pieces={pieces}/>
-        <button onClick={this.addPiece.bind(this)}>Add</button>
+        <PieceAdder addPiece={this.addPiece.bind(this)}/>
       </div>
     );
   }

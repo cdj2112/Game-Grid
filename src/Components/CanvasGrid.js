@@ -19,6 +19,7 @@ class CanvasGrid extends Component {
 
     ctx.clearRect(0,0,width,height);
 
+    ctx.strokeStyle = '#000';
     ctx.beginPath();
     for (let i = 1; i < gridSideLength; i++){
       ctx.moveTo(i*gridSizeW, 0);
@@ -32,16 +33,18 @@ class CanvasGrid extends Component {
     ctx.stroke();
 
     pieces.forEach((p)=>{
-      const { x, y } = p.pos;
+      const { pos, color } = p;
+      const { x, y } = pos;
       ctx.beginPath();
+      ctx.fillStyle = color;
       ctx.ellipse(
         (x+0.5)*gridSizeW, (y+0.5)*gridSizeH, 
         gridSizeW/2, gridSizeH/2,
         0, 0, 2*Math.PI
       )
       ctx.closePath();
+      ctx.fill();
     })
-    ctx.fill();
   }
 
   handleClick(ev){
