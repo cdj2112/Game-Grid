@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 
 import findPieceInPosition from '../utils/findPieceInPosition';
 
+const DIRCTIONS = [
+  [0, -1],
+  [1, -1],
+  [1, 0],
+  [1, 1],
+  [0, 1],
+  [-1, 1],
+  [-1, 0],
+  [-1, -1]
+]
+
 class CanvasGrid extends Component {
 	componentDidMount(){
 		this.redraw();
@@ -44,7 +55,7 @@ class CanvasGrid extends Component {
     }
 
     pieces.forEach((p)=>{
-      const { pos, color } = p;
+      const { pos, color, path } = p;
       const { x, y } = pos;
       ctx.beginPath();
       ctx.fillStyle = color;
@@ -55,6 +66,16 @@ class CanvasGrid extends Component {
       )
       ctx.closePath();
       ctx.fill();
+
+      ctx.beginPath();
+      let lx = (x+0.5)*gridSizeW, ly = (y+0.5)*gridSizeH
+      ctx.moveTo( lx, ly );
+      path.forEach((d)=>{
+        lx += gridSizeW * DIRCTIONS[d][0];
+        ly += gridSizeH * DIRCTIONS[d][1];
+        ctx.lineTo( lx, ly );
+      });
+      ctx.stroke();
     })
   }
 

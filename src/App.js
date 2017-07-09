@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import CanvasGrid from './Components/CanvasGrid';
 import PieceAdder from './Components/PieceAdder';
+import DirectionControl from './Components/DirectionControl';
 
 import findPieceInPosition from './utils/findPieceInPosition';
 
@@ -10,11 +11,11 @@ import './App.css';
 
 class App extends Component {
   constructor(props){
-    super()
+    super();
     this.state={
       pieces: [],
       selected: -1,
-    }
+    };
   }
 
   addPiece({ x, y, color }){
@@ -24,14 +25,37 @@ class App extends Component {
     if(!taken) {
       pieces.push({
         pos: {x:parseInt(x), y:parseInt(y)},
-        color
+        color,
+        path:[]
       });
     }
     this.setState({pieces});
   }
 
   selectPiece(index){
-    this.setState({selected: index})
+    this.setState({selected: index});
+  }
+
+  addPathToSelected(direction){
+    const {pieces, selected} = this.state;
+    if(selected>=0){
+      const selP = pieces[selected];
+      if(Math.abs(selP.path[selP.path.length-1] - direction) !== 4){
+        selP.path.push(direction);
+      } else {
+        selP.path.splice(-1,1);
+      }
+      pieces.splice(selected, 1, selP);
+      this.setState({pieces});
+    }
+  }
+
+  clearPathOfSelected(){
+    const {pieces, selected} = this.state;
+    if(selected>=0){
+      pieces[selected].path=[];
+      this.setState({pieces})
+    }
   }
 
   removeSelected(){
@@ -53,6 +77,10 @@ class App extends Component {
         <PieceAdder selected={selected} 
           addPiece={this.addPiece.bind(this)}
           removeSelected={this.removeSelected.bind(this)}
+        />
+        <DirectionControl 
+          addPath={this.addPathToSelected.bind(this)}
+          clearPath={this.clearPathOfSelected.bind(this)}
         />
       </div>
     );

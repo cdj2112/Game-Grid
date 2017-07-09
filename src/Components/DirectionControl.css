@@ -1,0 +1,31 @@
+.arrowBase {
+	position: absolute;
+	top: 150px;
+	left: 500px;
+	width: 200px;
+	height: 150px;
+}
+
+.rosePoint {
+	position: absolute;
+	width:33%;
+	height: 33%;
+	top: 33%;
+	left: 33%;
+}
+
+.north {
+	top: 0;
+}
+
+.east {
+	left: 66%;
+}
+
+.south {
+	top: 66%;
+}
+
+.west {
+	left:0;
+}
