@@ -37,6 +37,13 @@ class App extends Component {
     this.setState({selected: index});
   }
 
+  changeColorofSelected(color){
+    const { pieces, selected } = this.state;
+    if(selected < 0) return;
+    pieces[selected].color = color;
+    this.setState({ pieces });
+  }
+
   addPathToSelected(direction){
     const {pieces, selected} = this.state;
     if(selected>=0){
@@ -108,9 +115,9 @@ class App extends Component {
           gridSideLength={10} pieces={pieces} selected={selected}
           selectPiece={this.selectPiece.bind(this)}
         />
-        <PieceAdder selected={selected} 
           addPiece={this.addPiece.bind(this)}
           removeSelected={this.removeSelected.bind(this)}
+        <PieceAdder selected = {selected >= 0 && pieces[selected]}
         />
         <DirectionControl 
           validDirections = {this.deriveCollision()}
