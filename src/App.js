@@ -125,6 +125,7 @@ class App extends Component {
           addPath = {this.addPathToSelected.bind(this)}
           clearPath = {this.clearPathOfSelected.bind(this)}
           execute = {this.executePaths.bind(this)}
+          path = {pieces[selected].path}
         /> }
       </div>
     );

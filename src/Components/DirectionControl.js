@@ -17,13 +17,28 @@ const DIRECTIONS = {
 export default class DirectionControl extends Component {
   addPath(key){
   	return () => {
-      if(key!==8) this.props.addPath(key);
+      if (key!==8) this.props.addPath(key);
       else this.props.clearPath();
     }
   }
 
+  measuePath(path){
+    let diagonal = 0;
+    return path.reduce((length, direction)=>{
+      if (direction % 2 === 0) {
+        return length + 1;
+      } else if (diagonal % 2 === 1) {
+        diagonal++;
+        return length + 2;
+      } else {
+        diagonal++;
+        return length + 1;
+      }
+    }, 0);
+  }
+
   render(){
-  	const { validDirections, execute } = this.props;
+  	const { path, validDirections, execute } = this.props;
   	const directionlabels = Object.keys(DIRECTIONS).map((d, idx)=>{
   		return <label 
   		  key={idx} 
@@ -33,9 +48,14 @@ export default class DirectionControl extends Component {
   		 {d}
   		</label>;
   	})
-  	return <div className={'arrowBase'}>
+  	return <div className = 'arrowBase'>
       {directionlabels}
-      <button className={'rosePoint bottom'} onClick={execute}>Execute Paths</button>
+      <button className = 'rosePoint bottom west' onClick = {execute}>
+        Execute Paths
+      </button>
+      <label className = 'rosePoint bottom east'>
+        {`${this.measuePath(path)*5}ft.`}
+      </label>
   	</div>
   }
 }
