@@ -21,11 +21,11 @@ class App extends Component {
 
   addPiece({ x, y, color }){
     const { pieces } = this.state;
-    const taken = findPieceInPosition(pieces, parseInt(x), parseInt(y));
+    const taken = findPieceInPosition(pieces, parseInt(x, 10), parseInt(y, 10));
 
     if(!taken) {
       pieces.push({
-        pos: {x:parseInt(x), y:parseInt(y)},
+        pos: {x:parseInt(x, 10), y:parseInt(y, 10)},
         color,
         path:[]
       });
@@ -112,18 +112,19 @@ class App extends Component {
     return (
       <div className="App">
         <CanvasGrid 
-          gridSideLength={10} pieces={pieces} selected={selected}
-          selectPiece={this.selectPiece.bind(this)}
+          gridSideLength = {10} pieces = {pieces} selected = {selected}
+          selectPiece = {this.selectPiece.bind(this)}
         />
-          addPiece={this.addPiece.bind(this)}
-          removeSelected={this.removeSelected.bind(this)}
         <PieceAdder selected = {selected >= 0 && pieces[selected]}
+          addPiece = {this.addPiece.bind(this)}
+          removeSelected = {this.removeSelected.bind(this)}
+          changeColorofSelected = {this.changeColorofSelected.bind(this)}
         />
         <DirectionControl 
           validDirections = {this.deriveCollision()}
-          addPath={this.addPathToSelected.bind(this)}
-          clearPath={this.clearPathOfSelected.bind(this)}
-          execute={this.executePaths.bind(this)}
+          addPath = {this.addPathToSelected.bind(this)}
+          clearPath = {this.clearPathOfSelected.bind(this)}
+          execute = {this.executePaths.bind(this)}
         />
       </div>
     );
