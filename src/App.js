@@ -120,12 +120,12 @@ class App extends Component {
           removeSelected = {this.removeSelected.bind(this)}
           changeColorofSelected = {this.changeColorofSelected.bind(this)}
         />
-        <DirectionControl 
+        { selected>=0 && <DirectionControl 
           validDirections = {this.deriveCollision()}
           addPath = {this.addPathToSelected.bind(this)}
           clearPath = {this.clearPathOfSelected.bind(this)}
           execute = {this.executePaths.bind(this)}
-        />
+        /> }
       </div>
     );
   }
